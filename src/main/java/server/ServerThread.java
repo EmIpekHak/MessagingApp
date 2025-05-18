@@ -1,5 +1,7 @@
 package server;
 
+import dao.MessageDao;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -9,6 +11,7 @@ public class ServerThread extends Thread {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private MessageDao messageDao = new MessageDao();
 
     public ServerThread(Socket socket){
         this.clientSocket = socket;
@@ -25,6 +28,7 @@ public class ServerThread extends Thread {
         try{
             while(true){
                 String message = in.readLine();
+                this.messageDao.save(new model.Message(0,message,null));
                 System.out.println("Message received from client: " + message);
                 out.println("Message received from client: " + message);
             }
