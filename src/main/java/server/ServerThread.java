@@ -47,8 +47,12 @@ public class ServerThread extends Thread {
                 User toUserObj = this.users.stream().filter(user -> user.getName().equals(toUser)).findFirst().orElse(null);
 
                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-                this.messageDao.save(new model.Message(message, currentTime, fromUserObj.getId(), toUserObj.getId()));
+
+                // save into database
+                this.messageDao.save(new model.Message(messageContent, currentTime, fromUserObj.getId(), toUserObj.getId()));
                 System.out.println("Message received from client: " + message);
+
+
                 out.println("Message received from client: " + message);
             }
         }catch(Exception e){
