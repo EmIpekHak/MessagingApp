@@ -8,9 +8,12 @@ public class Main {
     public static void main(String[] args) {
         try(ServerSocket serverSocket = new ServerSocket(5000))
         {
-            Socket socket = serverSocket.accept();
-            ServerThread serverThread = new ServerThread(socket);
-            serverThread.start();
+            while(true)
+            {
+                Socket socket = serverSocket.accept();
+                ServerThread serverThread = new ServerThread(socket);
+                serverThread.start();
+            }
         }catch (Exception e) {
             System.out.println("Error occured in main of server :" + e.getStackTrace());
         }

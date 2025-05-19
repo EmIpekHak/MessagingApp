@@ -1,19 +1,22 @@
 package server;
 
 import dao.MessageDao;
+import dao.UserDao;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class ServerThread extends Thread {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
     private MessageDao messageDao = new MessageDao();
+    private UserDao userDao = new UserDao();
 
-    public ServerThread(Socket socket){
+    public ServerThread(Socket socket) throws SQLException, ClassNotFoundException {
         this.clientSocket = socket;
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -28,6 +31,13 @@ public class ServerThread extends Thread {
         try{
             while(true){
                 String message = in.readLine();
+                String[] messageParsed = message.split(" ");
+                String fromUser = messageParsed[0];
+                String toUser = messageParsed[1];
+                String messageContent = messageParsed[2];
+
+
+
                 this.messageDao.save(new model.Message(0,message,null));
                 System.out.println("Message received from client: " + message);
                 out.println("Message received from client: " + message);

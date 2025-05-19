@@ -16,31 +16,34 @@ public class Main {
             String userInput;
             String response;
             String clientName="empty";
+            String recipient;
             ClientThread clientThread = new ClientThread(socket);
             clientThread.start();
 
+            System.out.println("Please enter your name");
+            userInput = scanner.nextLine();
+            clientName = userInput;
+
+            System.out.println("Please enter the name of the recipient");
+            userInput = scanner.nextLine();
+            recipient = userInput;
+
             do{
-                if(clientName.equals("empty")){
-                    System.out.println("Please enter your name");
-                    userInput = scanner.nextLine();
-                    clientName = userInput;
-                    output.println(userInput);
-                    if(userInput.equals("exit")){
-                        break;
-                    }
-                }
-                else {
-                    String message = ("("+ clientName +") " +" message: ");
-                    System.out.println(message);
-                    userInput = scanner.nextLine();
-                    output.println(message+" "+userInput);
-                    if(userInput.equals("exit")){
-                        break;
-                    }
+
+                System.out.println("Please enter your message:");
+                userInput = scanner.nextLine();
+
+                if(userInput.equals("exit")){
+                    break;
                 }
 
+                String message = ("("+ clientName + "->" + recipient +") " +" message: " + userInput);
+                System.out.println(message);
+
+                // send message to server
+                output.println(clientName + " " + recipient + " " +message);
             }
-            while(!userInput.equals("exit"));
+            while(true);
 
         } catch (Exception e) {
             System.out.println("Exception in cleint main" + e.getStackTrace());
