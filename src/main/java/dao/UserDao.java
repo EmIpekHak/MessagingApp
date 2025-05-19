@@ -10,12 +10,12 @@ public class UserDao implements IDao<User>{
     private Connection con;
 
     public UserDao() throws SQLException, ClassNotFoundException {
-        this.con = MysqlDatabaseConnection.getConnection("jdbc:mysql://localhost:3306/kurssystem", "root", "");
+        this.con = MysqlDatabaseConnection.getConnection("jdbc:mysql://localhost:3306/messagingapp", "root", "");
     }
 
     @Override
     public User findById(Integer id) {
-        String sql = "SELECT id, name, email FROM users WHERE id = ?";
+        String sql = "SELECT id, name, email FROM user WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -37,7 +37,7 @@ public class UserDao implements IDao<User>{
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT id, name, email FROM users";
+        String sql = "SELECT id, name, email FROM user";
         try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -55,7 +55,7 @@ public class UserDao implements IDao<User>{
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
+        String sql = "INSERT INTO user (name, email) VALUES (?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -79,7 +79,7 @@ public class UserDao implements IDao<User>{
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE user SET name = ?, email = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -95,7 +95,7 @@ public class UserDao implements IDao<User>{
 
     @Override
     public void delete(Integer id) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM user WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             int affectedRows = ps.executeUpdate();

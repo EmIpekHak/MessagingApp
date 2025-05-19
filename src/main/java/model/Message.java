@@ -5,15 +5,34 @@ import java.sql.Timestamp;
 public class Message {
     private int id;
     private String message;
+    private int senderId;
+    private int receiverId;
     private Timestamp date;
 
-    public Message(int id, String message, Timestamp date) {
-        this.id = id;
+    public Message(String message, Timestamp date, int senderId, int receiverId) {
         this.message = message;
         this.date = date;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
     }
 
     public Message(){}
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
+
+    public int getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
+    }
 
     public int getId() {
         return id;

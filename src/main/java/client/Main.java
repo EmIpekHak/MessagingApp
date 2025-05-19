@@ -37,11 +37,11 @@ public class Main {
                     break;
                 }
 
-                String message = ("("+ clientName + "->" + recipient +") " +" message: " + userInput);
-                System.out.println(message);
+                String message = userInput;
+                System.out.println("("+ clientName + "->" + recipient +") " +" message: " + userInput);
 
                 // send message to server
-                output.println(clientName + " " + recipient + " " +message);
+                output.println(clientName + " " + recipient + " " + message);
             }
             while(true);
 
